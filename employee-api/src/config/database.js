@@ -17,8 +17,8 @@ const pool = new Pool({
 });
 
 pool.on('error', (err, client) => {
-  console.log('Unexpected error on idle client')
-  process.exit(-1)
+  console.log('Unexpected error on idle client', err)
+  process.exit(-1);
 });
 
 pool.on('connect', () => {
