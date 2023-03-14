@@ -25,14 +25,16 @@ exports.createEmployee = async(req, res) => {
 
 //==> Método responsável por listar todos os 'Employees':
 exports.listAllEmployees = async(req, res) => {
-  const response = await db.query('select * from employee ORDER BY name ASC');
+  const response = await db.query('SELECT * FROM employee ORDER BY name ASC');
   res.status(200).send(response.rows);
 };
 
 //==> Método responsável por listar os 'Employees' por Id:
 exports.findEmployeeById = async(req, res) => {
   const employeeId = req.params.id;
-  const response = await db.query('select * from employee where employee_id = $1', [employeeId]);
+  const response = await db.query('SELECT * FROM employee WHERE employee_id = $1', 
+  [employeeId]
+  );
   res.status(200).send(response.rows);
 };
 
@@ -46,4 +48,13 @@ exports.updateEmployeeById = async(req, res) => {
     [name, job_role, salary, birth, employee_registration, employeeId]
     );
     res.status(200).send({ message: 'Funcionário atualizado com sucesso!!'});
+};
+
+//==> Método responsável por deletar um determinado employee por Id:
+exports.deleteEmployeeById = async(req,res) => {
+  const employeeId = req.params.id;
+  const response = await db.query('DELETE FROM employee WHERE employee_id = $1',
+  [employeeId]
+  );
+  res.status(200).send({ message: 'Funcionário excluído com sucesso!!'});
 }
